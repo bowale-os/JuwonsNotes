@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Create Series{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2 class="mb-4">Create a New Series</h2>
+  <form method="POST" class="card p-4 shadow-sm" style="max-width: 600px;">
+    {{ form.hidden_tag() }}
+    
+    <div class="mb-3">
+      {{ form.title.label(class_="form-label") }}
+      {{ form.title(class_="form-control", placeholder="Enter the series title") }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.description.label(class_="form-label") }}
+      {{ form.description(class_="form-control", rows=4, placeholder="Write a short description") }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+  </form>
+</div>
+{% endblock %}

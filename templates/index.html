@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Juwon's Notes</title>
+  <link rel="stylesheet" href="../static/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+
+
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      /* background-color: blue; */
+      font-family: 'Merriweather', sans-serif;
+    }
+
+    .big-container {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .left-section {
+      width:65%;
+      height: 100%;
+      overflow-y: auto; 
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /*Internet explorer 10+
+      /* background-color: blueviolet; */
+    }
+
+    /* Hide scrollbar for Chrome, Safari, and Edge */
+    .left-section::-webkit-scrollbar {
+      display: none;
+    }
+
+
+
+
+    .first-part{
+      margin-top: 50px;
+      margin-left: 50px;
+    }
+
+    .brand {
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem;
+      /* letter-spacing: 2px; */
+      margin-bottom: 40px;
+      /* background-color:#FFFDD0 ; */
+      /* color: #502b07; */
+    }
+
+    .view-options{
+      /* background-color: darkcyan; */
+      display: flex;
+      align-items: flex-end;
+    }
+
+   
+  .view-options button {
+  background: none;
+  border: none;
+  /* padding: 0 5px;         */
+  margin-right: 20px;
+  font: inherit;
+  color: black;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  height: 50px;
+  
+  display: flex;          /* enable flexbox */
+  align-items: flex-end;  /* align text at bottom */
+  /* optionally: justify-content: center; to center horizontally */
+}
+
+
+
+.view-options button:hover {
+  background-color: rgb(197, 197, 197); /* darker shade on hover */
+  text-decoration: underline; /* optional, for link effect */
+
+  /* or remove underline if you prefer */
+  /* text-decoration: none; */
+}
+
+
+    .display{
+      margin: 40px 0px 0px 50px;
+      /* background-color: lemonchiffon; */
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Posts View */
+
+    .post-herald {
+    width: 100%;
+    height: 140px;
+    /* background-color: fuchsia; */
+    margin-bottom: 20px;
+    border-radius: 8px;     
+    display: none;     
+     /* spacing after each post */
+}
+
+.post-separator {
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;   /* light grey line */
+  margin: 10px 0 20px 0;    /* spacing above and below */
+  border-radius: 2px;       /* optional slight rounding */
+}
+
+
+    .post-info {
+      display: flex;
+      gap: 10px;
+      height: 95%;
+      /* background-color: lightgreen; */
+      border-radius: 6px;
+      padding: 0;
+    }
+
+    .post-text {
+      flex: 3.5;
+      /* background-color: navy; */
+      border-radius: 6px;
+    }
+
+    .titledesc {
+      height:60%;
+      /* background-color: peru; */
+      margin:0;
+      display: flex;
+      flex-direction:column;
+      justify-content: flex-start;
+      padding: 0;
+    }
+
+    .post-title,
+    .post-desc {
+      margin: 0;
+      padding: 0;
+    }
+
+    .post-title{
+      font-size: 1.7rem;
+      font-weight: 500;
+      /* margin-bottom: px; */
+    }
+
+    .post-desc{
+      font-size: 1rem;
+    }
+
+    .miscinfo{
+      height: 40%;
+      /* background-color: linen; */
+      padding-top: 10px;
+    }
+
+    .post-series-link{
+      text-decoration: none;
+      color: inherit;
+      border-bottom: 1px solid steelblue;
+    }
+
+    .post-img {
+      flex: 1.5;
+      /* background-color: darkorange; */
+      border-radius: 6px;
+    }
+
+    .post-img > img{
+      height: 100%;
+      aspect-ratio: 1 / 1;
+      /* width: 80%; */
+    }
+
+    /* Series View */
+    .herald {
+    width: 100%;
+    height: 140px;
+    /* background-color: fuchsia; */
+    margin-bottom: 20px;
+    /* display: flex; */
+    /* padding: 10px; */
+    border-radius: 8px;
+    /* display: none; */
+    } 
+
+
+    .series-herald{
+      display: flex;
+      flex-direction: row;
+      /* display: none; */
+    }
+
+    .series-info {
+      flex:1.4;
+      background-color: lightgray;
+      height: 100%;
+      padding: 20px 20px 10px 20px;
+      display: flex;
+      flex-direction: column;
+      gap:5px;
+    }
+
+    .user-info{
+      flex:1;
+      /* background-color: aqua; */
+      display: flex;
+      height: auto;
+      align-items: center;
+      /* padding: 8px 12px; */
+      gap: 7px; /* space between image and name */
+    }
+
+    .user-img {
+      width: 23px;
+      height: 23px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+}
+
+    .user-img img {
+       width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;    /* ensures it crops/fits well */
+}
+
+    .user-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: #333; /* or any color that fits your theme */
+}
+
+
+    .series-desc{
+      flex:1.2;
+      /* background-color: rgb(17, 39, 40); */
+      /* color: aliceblue; */
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .posts-amount{
+      flex:2.0665;
+      /* background-color: darkslategrey; */
+      /* color: wheat; */
+      display: flex;
+      align-items: center;
+      font-size: 0.75rem;
+    }
+
+    .posts-imgs{
+      flex:1;
+      /* background-color: royalblue; */
+      display:flex;
+      gap: 3px;
+      margin-top: 0px;
+    }
+
+    .posts-imgs .image {
+    height: 100%;
+    overflow: hidden;
+    }
+
+    .posts-imgs .large {
+    flex: 6; /* ~60% */
+    }
+
+    .posts-imgs .medium {
+    flex: 3; /* ~30% */
+    }
+
+    .posts-imgs .small {
+    flex: 1.5; /* ~15% */
+    }
+
+    .posts-imgs img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    }
+
+
+    .right-section {
+  width: 35%;
+  height: 100%;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  /* background-color: rgb(73, 47, 61); */
+  overflow-y: auto; /* optional if right section has scrollable content */
+  padding: 30px 50px 0px 20px ;
+  /* padding-right: 50px; */
+  border-left: 1px solid lightgray;
+}
+
+    .writer-intro {
+      display: flex;
+      align-items: center; /* vertical alignment */
+      gap: 1rem;     
+    /* border: 3px dashed red; */
+    /* background-color: azure; */
+      padding: 10px;
+      padding-left: 0;
+      margin-bottom: 10px;
+      flex:1.5;
+}
+
+.writer-img {
+  width: 35%; /* scales with parent container */
+  aspect-ratio: 1 / 1; /* keeps it square */
+  border-radius: 50%;
+  overflow: hidden;
+  /* background-color: rosybrown; */
+  /* border: 3px solid rgba(108, 82, 57, 0.674); */
+  margin: 0;            /* remove auto-centering */
+  float: none;          /* aligns it to the left */
+}
+
+.writer-img img {
+  width: 100%;
+}
+
+.welcome-msg {
+  /* border: 3px dotted green; */
+  /* background-color: aquamarine; */
+  margin-bottom: 10px;
+  flex:1.5;
+
+}
+
+.why{
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 0;
+  border-bottom:2px solid #333;
+}
+
+.reason{
+  margin-top:10px ;
+  max-width: 100%;
+}
+
+
+.series-list {
+  /* border: 3px solid blue; */
+  /* background-color: chartreuse; */
+  /* min-height: 120px; */
+  padding: 10px;
+  flex:3;
+
+}
+
+
+    @media(max-width: 680px){
+
+        html, body {
+      overflow: auto;
+      height: auto;
+    }
+
+      .big-container{
+        flex-direction: column;
+        height: auto;
+      }
+
+      .left-section, .right-section {
+        width: 100%;
+      }
+
+      .post-herald {
+        height: auto; /* let height adjust to content */
+      }
+
+      .post-info {
+        flex-direction: column; /* stack text and image vertically */
+        height: auto;
+      }
+
+      .post-text,
+      .post-img {
+        width: 100%;
+        flex: none;
+      }
+
+      .post-img img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: unset;
+        object-fit: contain;
+      }
+
+      .titledesc {
+        margin-bottom: 10px;
+      }
+
+      .miscinfo {
+        padding-top: 5px;
+      }
+
+      .post-title {
+        font-size: 1.5rem;
+      }
+
+      .post-desc {
+        font-size: 1rem;
+      }
+
+      .post-separator {
+        margin: 20px 0;
+      }
+
+      .right-section {
+      padding: 20px 15px;
+      align-items: center;      /* center children horizontally */
+      text-align: center;       /* center text inside elements */
+      position: static;
+      height: auto;
+      overflow-y: visible;
+}
+
+.writer-intro {
+  flex-direction: column;   /* stack image and name vertically */
+  align-items: center;      /* center the image */
+  gap: 10px;
+}
+
+.writer-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.writer-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.welcome-msg {
+  margin-top: 20px;
+}
+
+.series-list {
+  margin-top: 20px;
+}
+
+    }
+
+    
+
+    
+
+  </style>
+</head>
+<body>
+  <div class="big-container">
+    <div class="left-section box">
+        <div class="first-part">
+          <h1 class="brand">Juwon's Notes</h1>
+          <div class="view-options">
+            <button class="option" id="postViewBtn">Post view</button>
+            <button class="option" id="seriesViewBtn">Series view</button>
+          </div>
+        </div>
+        <div class="display">
+          {% for post in posts %}
+            <div class="post-herald">
+              <div class="post-info">
+                <div class="post-text">
+                  <div class="titledesc">
+                    <p class="post-title">
+                      {{post['title']}}
+                    </p>
+                    <p class="post-desc">
+                      {{post['description']}}
+                    </p>
+                  </div>
+                  <div class="miscinfo">
+                    <span>Published <span>{{post['days_ago']}}</span>d ago in <a class='post-series-link' href="{{url_for('view_series', series_id=post['series_id'])}}">{{post['series']}}</a></span>
+                  </div>
+                </div>
+                <div class="post-img">
+                  <img src="{{post['image']}}" alt="">
+                </div>
+              </div>
+
+          </div>
+          {% if not loop.last %}
+            <div class="post-separator"></div>
+          {% endif %}
+          {% endfor %}
+
+          {% for series in series %}
+  <div class="series-herald herald">
+    <div class="series-info">
+      <div class="user-info">
+        <div class="user-img">
+          <img src="../static/uploads/WhatsApp.jpg" alt="bowale-os">
+        </div>
+        <div class="user-name">Daniel Sobowale</div>
+      </div>
+      <div class="series-desc">{{ series.title }}</div>
+      <div class="posts-amount">{{ series.post_amount }} {{ 'post' if series.post_amount == 1 else 'posts' }}</div>
+    </div>
+
+    <div class="posts-imgs">
+      {% set imgs = series.post_imgs %}
+      
+      {% if not imgs or imgs|length == 0 %}
+        <div class="no-post"><h2>No posts yet..</h2></div>
+      
+      {% elif imgs|length == 1 %}
+        <div class="one-post">
+          <img src="{{ imgs[0] }}" alt="Post Image" loading="lazy">
+        </div>
+      
+      {% elif imgs|length == 2 %}
+        <div class="image large">
+          <img src="{{ imgs[0] }}" alt="Main Post" loading="lazy">
+        </div>
+        <div class="image medium">
+          <img src="{{ imgs[1] }}" alt="Second Post" loading="lazy">
+        </div>
+      
+      {% elif imgs|length >= 3 %}
+        <div class="image large">
+          <img src="{{ imgs[0] }}" alt="Main Post" loading="lazy">
+        </div>
+        <div class="image medium">
+          <img src="{{ imgs[1] }}" alt="Second Post" loading="lazy">
+        </div>
+        <div class="image small">
+          <img src="{{ imgs[2] }}" alt="Third Post" loading="lazy">
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}
+
+          
+        </div>
+    </div>
+
+      
+  
+    <div class="right-section box">
+      <div class="writer-intro">
+        <div class="writer-img">
+          <img src="../static/uploads/WhatsApp.jpg" alt="bowale-os">
+        </div>
+        <div class="writer-name"></div>
+      </div>
+      <div class="welcome-msg">
+        <span class="why">Why I write: </span>
+        <p class="reason"> 
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, iste rerum magnam ea amet eius, nulla, cum non officiis placeat facilis! Asperiores corporis voluptatem sunt facere voluptatum nulla quam doloribus.
+        </p>
+      </div>
+      <div class="series-list">
+        
+      </div>
+    </div>
+  <div>
+  </div>
+  </div>
+
+<script>
+  const postViewBtn = document.getElementById("postViewBtn");
+  const seriesViewBtn = document.getElementById("seriesViewBtn");
+
+  const postHeralds = document.querySelectorAll(".post-herald");
+  const postSeparators = document.querySelectorAll(".post-separator");
+  const seriesHeralds = document.querySelectorAll(".series-herald");
+
+  function showPosts() {
+    postHeralds.forEach(el => el.style.display = "block");
+    postSeparators.forEach(el => el.style.display = "block");
+    seriesHeralds.forEach(el => el.style.display = "none");
+
+    postViewBtn.classList.add("active");
+    seriesViewBtn.classList.remove("active");
+  }
+
+  function showSeries() {
+    postHeralds.forEach(el => el.style.display = "none");
+    postSeparators.forEach(el => el.style.display = "none");
+    seriesHeralds.forEach(el => el.style.display = "flex");
+
+    seriesViewBtn.classList.add("active");
+    postViewBtn.classList.remove("active");
+  }
+
+  postViewBtn.addEventListener("click", showPosts);
+  seriesViewBtn.addEventListener("click", showSeries);
+
+  // Show posts by default when page loads
+  document.addEventListener("DOMContentLoaded", showPosts);
+</script>
+
+</body>
+</html>

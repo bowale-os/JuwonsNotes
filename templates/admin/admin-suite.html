@@ -1,0 +1,23 @@
+<!-- templates/admin_suite.html -->
+{% extends 'base.html' %}
+
+{% block title %}Admin Suite{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1 class="mb-4">Welcome to the Admin Suite</h1>
+  <p class="lead">This is your dashboard. Use the links on the left to create new content.</p>
+
+  <div class="mt-5">
+    <h3 class="mb-3">Quick Links</h3>
+    <ul class="list-group" style="max-width: 300px;">
+      <li class="list-group-item">
+        <a href="{{ url_for('create_post') }}" class="text-decoration-none">Create New Post</a>
+      </li>
+      <li class="list-group-item">
+        <a href="{{ url_for('create_series') }}" class="text-decoration-none">Create New Series</a>
+      </li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
