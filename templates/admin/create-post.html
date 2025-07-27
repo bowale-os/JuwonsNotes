@@ -2,77 +2,86 @@
 {% block title %}Create Post{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-  <h2 class="mb-4">Create New Post</h2>
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <h2 class="mb-4 text-center text-md-start">Create New Post</h2>
 
-  <form method="POST" enctype="multipart/form-data" novalidate>
-    {{ form.hidden_tag() }}
+      <form method="POST" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag() }}
 
-    <!-- Title -->
-    <div class="mb-3">
-      {{ form.title.label(class="form-label") }}
-      {{ form.title(class="form-control", placeholder="Enter post title") }}
-      {% for error in form.title.errors %}
-        <div class="text-danger small">{{ error }}</div>
-      {% endfor %}
+        <!-- Title -->
+        <div class="mb-3">
+          {{ form.title.label(class="form-label") }}
+          {{ form.title(class="form-control", placeholder="Enter post title") }}
+          {% for error in form.title.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+          {{ form.description.label(class="form-label") }}
+          {{ form.description(class="form-control", placeholder="Short description...") }}
+          {% for error in form.description.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+
+        <!-- Content -->
+        <div class="mb-3">
+          {{ form.content.label(class="form-label") }}
+          {{ form.content(class="form-control", rows="6", placeholder="Write your post...") }}
+          {% for error in form.content.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+
+        <!-- Series Selection -->
+        <div class="mb-3">
+          {{ form.series_id.label(class="form-label") }}
+          {{ form.series_id(class="form-select") }}
+          {% for error in form.series_id.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+
+        <!-- Upload an image -->
+        <div class="mb-3">
+          {{ form.pic.label(class="form-label") }}
+          {{ form.pic(class="form-control") }}
+          {% for error in form.pic.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+
+        <!-- Or use an image URL -->
+        <div class="mb-3">
+          <label for="image_url" class="form-label">Or use an image URL</label>
+          {{ form.image_url(class="form-control", placeholder="https://...") }}
+          {% for error in form.image_url.errors %}
+            <div class="text-danger small">{{ error }}</div>
+          {% endfor %}
+        </div>
+
+        <!-- Image Preview -->
+        <div class="mb-4">
+          <label class="form-label">Image Preview:</label><br>
+          <img id="imagePreview" src="#" alt="Image preview"
+               class="img-thumbnail img-fluid d-none"
+               style="max-height: 300px;">
+        </div>
+
+        <!-- Submit -->
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Create Post</button>
+        </div>
+      </form>
     </div>
-
-    <!-- Description -->
-    <div class="mb-3">
-      {{ form.description.label(class="form-label") }}
-      {{ form.description(class="form-control", placeholder="Short description...") }}
-      {% for error in form.description.errors %}
-        <div class="text-danger small">{{ error }}</div>
-      {% endfor %}
-    </div>
-
-    <!-- Content -->
-    <div class="mb-3">
-      {{ form.content.label(class="form-label") }}
-      {{ form.content(class="form-control", rows="6", placeholder="Write your post...") }}
-      {% for error in form.content.errors %}
-        <div class="text-danger small">{{ error }}</div>
-      {% endfor %}
-    </div>
-
-    <!-- Series Selection -->
-    <div class="mb-3">
-      {{ form.series_id.label(class="form-label") }}
-      {{ form.series_id(class="form-select") }}
-      {% for error in form.series_id.errors %}
-        <div class="text-danger small">{{ error }}</div>
-      {% endfor %}
-    </div>
-
-    <!-- Upload an image -->
-    <div class="mb-3">
-      {{ form.pic.label(class="form-label") }}
-      {{ form.pic(class="form-control") }}
-      {% for error in form.pic.errors %}
-        <div class="text-danger small">{{ error }}</div>
-      {% endfor %}
-    </div>
-
-    <!-- OR use an image URL -->
-    <div class="mb-3">
-      <label for="image_url" class="form-label">Or use an image URL</label>
-      {{ form.image_url(class="form-control", placeholder="https://...") }}
-      {% for error in form.image_url.errors %}
-        <div class="text-danger small">{{ error }}</div>
-      {% endfor %}
-    </div>
-
-    <!-- Image Preview -->
-    <div class="mb-3">
-      <label class="form-label">Image Preview:</label><br>
-      <img id="imagePreview" src="#" alt="Image preview" style="max-width: 300px; display: none;" class="img-thumbnail">
-    </div>
-
-    <!-- Submit button -->
-    <button type="submit" class="btn btn-primary">Create Post</button>
-  </form>
+  </div>
 </div>
 
+<!-- Responsive Image Preview Logic -->
 <script>
   const fileInput = document.querySelector('input[type="file"]');
   const urlInput = document.querySelector('input[name="image_url"]');
@@ -83,7 +92,7 @@
       const reader = new FileReader();
       reader.onload = function (e) {
         preview.src = e.target.result;
-        preview.style.display = 'block';
+        preview.classList.remove('d-none');
       };
       reader.readAsDataURL(fileInput.files[0]);
     }
@@ -92,9 +101,9 @@
   urlInput.addEventListener('input', () => {
     if (urlInput.value.startsWith('http')) {
       preview.src = urlInput.value;
-      preview.style.display = 'block';
+      preview.classList.remove('d-none');
     } else {
-      preview.style.display = 'none';
+      preview.classList.add('d-none');
     }
   });
 </script>

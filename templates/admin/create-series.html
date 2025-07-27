@@ -2,22 +2,31 @@
 {% block title %}Create Series{% endblock %}
 
 {% block content %}
-<div class="container">
-  <h2 class="mb-4">Create a New Series</h2>
-  <form method="POST" class="card p-4 shadow-sm" style="max-width: 600px;">
-    {{ form.hidden_tag() }}
-    
-    <div class="mb-3">
-      {{ form.title.label(class_="form-label") }}
-      {{ form.title(class_="form-control", placeholder="Enter the series title") }}
-    </div>
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <h2 class="mb-4 text-center text-md-start">Create a New Series</h2>
 
-    <div class="mb-3">
-      {{ form.description.label(class_="form-label") }}
-      {{ form.description(class_="form-control", rows=4, placeholder="Write a short description") }}
-    </div>
+      <form method="POST" class="card p-4 shadow-sm">
+        {{ form.hidden_tag() }}
 
-    <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
-  </form>
+        <div class="mb-3">
+          {{ form.title.label(class_="form-label") }}
+          {{ form.title(class_="form-control", placeholder="Enter the series title") }}
+        </div>
+
+        <div class="mb-3">
+          {{ form.description.label(class_="form-label") }}
+          {{ form.description(class_="form-control", rows=4, placeholder="Write a short description") }}
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">
+            {{ form.submit.label.text }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 {% endblock %}

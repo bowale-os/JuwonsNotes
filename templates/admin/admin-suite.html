@@ -4,20 +4,24 @@
 {% block title %}Admin Suite{% endblock %}
 
 {% block content %}
-<div class="container">
-  <h1 class="mb-4">Welcome to the Admin Suite</h1>
-  <p class="lead">This is your dashboard. Use the links on the left to create new content.</p>
+<div class="container py-4">
+  <div class="text-center text-md-start">
+    <h1 class="mb-3">Welcome to the Admin Suite</h1>
+    <p class="lead">This is your dashboard. Use the links below to create new content.</p>
+  </div>
 
-  <div class="mt-5">
-    <h3 class="mb-3">Quick Links</h3>
-    <ul class="list-group" style="max-width: 300px;">
-      <li class="list-group-item">
-        <a href="{{ url_for('create_post') }}" class="text-decoration-none">Create New Post</a>
-      </li>
-      <li class="list-group-item">
-        <a href="{{ url_for('create_series') }}" class="text-decoration-none">Create New Series</a>
-      </li>
-    </ul>
+  <div class="mt-4 d-flex justify-content-center justify-content-md-start">
+    <div class="w-100" style="max-width: 350px;">
+      <h4 class="mb-3 text-center text-md-start">Quick Links</h4>
+      <div class="list-group">
+        <a href="{{ url_for('create_post') }}" class="list-group-item list-group-item-action">
+          ✏️ Create New Post
+        </a>
+        <a href="{{ url_for('create_series') }}" class="list-group-item list-group-item-action">
+          📚 Create New Series
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
