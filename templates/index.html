@@ -5,14 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Juwon's Notes</title>
   <link rel="stylesheet" href="../static/styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 
 
 
   <style>
+    :root {
+  --bg-color: #FAF6F1;         /* Light cream background */
+  --text-color: #2E1F1B;       /* Espresso dark brown */
+  --accent-color: #5C4033;     /* Medium roast */
+  --hover-color: #EDE3DA;      /* Soft latte cream */
+  --border-color: #B8A89F;     /* Subtle coffee-taupe */
+}
+
+
+
     * {
       margin: 0;
       padding: 0;
@@ -22,8 +31,9 @@
     html, body {
       height: 100%;
       overflow: hidden;
-      /* background-color: blue; */
-      font-family: 'Merriweather', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Lora', sans-serif;
     }
 
     .big-container {
@@ -46,9 +56,6 @@
       display: none;
     }
 
-
-
-
     .first-part{
       margin-top: 50px;
       margin-left: 50px;
@@ -59,43 +66,52 @@
       font-size: 3rem;
       /* letter-spacing: 2px; */
       margin-bottom: 40px;
-      /* background-color:#FFFDD0 ; */
-      /* color: #502b07; */
+      color: var(--accent-color);
     }
+.view-options {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 10px 20px;
+  background-color: #fffaf5;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  width: fit-content;
+  transition: box-shadow 0.3s ease;
+}
 
-    .view-options{
-      /* background-color: darkcyan; */
-      display: flex;
-      align-items: flex-end;
-    }
+.view-options:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
 
-   
-  .view-options button {
-  background: none;
+.view-options button.option {
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: transparent;
   border: none;
-  /* padding: 0 5px;         */
-  margin-right: 20px;
-  font: inherit;
-  color: black;
+  color: var(--text-color);
+  padding: 10px 16px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: color 0.3s ease;
-  height: 50px;
-  
-  display: flex;          /* enable flexbox */
-  align-items: flex-end;  /* align text at bottom */
-  /* optionally: justify-content: center; to center horizontally */
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.15s ease;
+  font-family: inherit;
+  position: relative;
 }
 
-
-
-.view-options button:hover {
-  background-color: rgb(197, 197, 197); /* darker shade on hover */
-  text-decoration: underline; /* optional, for link effect */
-
-  /* or remove underline if you prefer */
-  /* text-decoration: none; */
+.view-options button.option:hover {
+  background-color: var(--hover-color);
+  color: var(--accent-color);
+  transform: translateY(-1px);
 }
 
+.view-options button.option.active {
+  background-color: var(--accent-color);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(92, 64, 51, 0.3);
+}
 
     .display{
       margin: 40px 0px 0px 50px;
@@ -119,7 +135,8 @@
   }
 
 .post-herald:hover {
-  background-color: #f3f3f3; /* subtle hover effect */
+  background-color: var(--hover-color);
+
 }
 
 
@@ -161,41 +178,79 @@
     .post-desc {
       margin: 0;
       padding: 0;
+      
     }
 
     .post-title{
-      font-size: 1.7rem;
+      font-size: 1.5rem;
       font-weight: 500;
       /* margin-bottom: px; */
     }
 
     .post-desc{
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
 
     .miscinfo{
       height: 40%;
-      /* background-color: linen; */
+      font-size: 1rem;
       padding-top: 10px;
     }
+.post-series-link {
+  position: relative;
+  overflow: hidden;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  z-index: 0;
+  border-bottom: 2px solid transparent; /* reserve space for border */
+}
 
-    .post-series-link{
-      text-decoration: none;
-      color: inherit;
-      border-bottom: 1px solid steelblue;
-    }
+.post-series-link::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background-color: rgba(92, 64, 51, 0.3); /* light brown translucent */
+  z-index: -1;
+  transition: height 0.3s ease 0.15s, opacity 0.3s ease 0.15s; /* delay background */
+  opacity: 0;
+  pointer-events: none;
+}
+
+.post-series-link:hover {
+  color: #3a2b1f; /* optionally darken text on hover */
+  border-bottom-color: rgba(92, 64, 51, 0.3) /* show bottom border immediately */
+}
+
+.post-series-link:hover::before {
+  height: 100%;
+  opacity: 1;
+}
+
 
     .post-img {
-      flex: 1.5;
-      /* background-color: darkorange; */
-      border-radius: 6px;
-    }
+  flex: 1.5;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* optional soft shadow */
+  transition: transform 0.2s ease;
+}
 
-    .post-img > img{
-      height: 100%;
-      aspect-ratio: 1 / 1;
-      /* width: 80%; */
-    }
+.post-img:hover {
+  transform: scale(1.02); /* subtle zoom on hover */
+}
+
+.post-img > img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: inherit; /* ensures the image follows parent radius */
+}
+
 
     /* Series View */
     .herald {
@@ -219,7 +274,7 @@
 
     .series-info {
       flex:1.4;
-      background-color: lightgray;
+      background-color: var(--hover-color);
       height: 100%;
       padding: 20px 20px 10px 20px;
       display: flex;
@@ -316,11 +371,10 @@
   top: 0;
   display: flex;
   flex-direction: column;
-  /* background-color: rgb(73, 47, 61); */
   overflow-y: auto; /* optional if right section has scrollable content */
   padding: 30px 50px 0px 20px ;
-  /* padding-right: 50px; */
-  border-left: 1px solid lightgray;
+  border-left: 1px solid var(--border-color);
+  
 }
 
     .writer-intro {
@@ -355,11 +409,11 @@
   /* background-color: aquamarine; */
   margin-bottom: 10px;
   flex:1.5;
-
+  font-family: 'Dancing Script';
 }
 
 .why{
-  font-size: 1.2rem;
+  font-size: 1.7rem;
   margin: 0;
   padding: 0;
   border-bottom:2px solid #333;
@@ -368,6 +422,7 @@
 .reason{
   margin-top:10px ;
   max-width: 100%;
+  font-size: 1.3rem;
 }
 
 
