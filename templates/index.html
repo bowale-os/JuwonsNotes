@@ -114,8 +114,14 @@
     margin-bottom: 20px;
     border-radius: 8px;     
     display: none;     
-     /* spacing after each post */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+.post-herald:hover {
+  background-color: #f3f3f3; /* subtle hover effect */
 }
+
 
 .post-separator {
   width: 100%;
@@ -207,6 +213,7 @@
     .series-herald{
       display: flex;
       flex-direction: row;
+      cursor: pointer;
       /* display: none; */
     }
 
@@ -469,10 +476,6 @@
 
     }
 
-    
-
-    
-
   </style>
 </head>
 <body>
@@ -487,7 +490,8 @@
         </div>
         <div class="display">
           {% for post in posts %}
-            <div class="post-herald">
+          <!-- <a href="{{ url_for('view_post', post_id=post['id']) }}" class="post-herald-link"> -->
+            <div class="post-herald" data-href="{{ url_for('view_post', post_id=post['id']) }}">
               <div class="post-info">
                 <div class="post-text">
                   <div class="titledesc">
@@ -511,54 +515,56 @@
           {% if not loop.last %}
             <div class="post-separator"></div>
           {% endif %}
+          <!-- </a> -->
           {% endfor %}
+        
 
           {% for series in series %}
-  <div class="series-herald herald">
-    <div class="series-info">
-      <div class="user-info">
-        <div class="user-img">
-          <img src="../static/uploads/WhatsApp.jpg" alt="bowale-os">
-        </div>
-        <div class="user-name">Daniel Sobowale</div>
-      </div>
-      <div class="series-desc">{{ series.title }}</div>
-      <div class="posts-amount">{{ series.post_amount }} {{ 'post' if series.post_amount == 1 else 'posts' }}</div>
-    </div>
+            <div class="series-herald herald" data-href="{{ url_for('view_series', series_id=series['id']) }}">
+              <div class="series-info">
+                <div class="user-info">
+                  <div class="user-img">
+                    <img src="../static/uploads/WhatsApp.jpg" alt="bowale-os">
+                  </div>
+                  <div class="user-name">Daniel Sobowale</div>
+                </div>
+                <div class="series-desc">{{ series.title }}</div>
+                <div class="posts-amount">{{ series.post_amount }} {{ 'post' if series.post_amount == 1 else 'posts' }}</div>
+              </div>
 
-    <div class="posts-imgs">
-      {% set imgs = series.post_imgs %}
-      
-      {% if not imgs or imgs|length == 0 %}
-        <div class="no-post"><h2>No posts yet..</h2></div>
-      
-      {% elif imgs|length == 1 %}
-        <div class="one-post">
-          <img src="{{ imgs[0] }}" alt="Post Image" loading="lazy">
-        </div>
-      
-      {% elif imgs|length == 2 %}
-        <div class="image large">
-          <img src="{{ imgs[0] }}" alt="Main Post" loading="lazy">
-        </div>
-        <div class="image medium">
-          <img src="{{ imgs[1] }}" alt="Second Post" loading="lazy">
-        </div>
-      
-      {% elif imgs|length >= 3 %}
-        <div class="image large">
-          <img src="{{ imgs[0] }}" alt="Main Post" loading="lazy">
-        </div>
-        <div class="image medium">
-          <img src="{{ imgs[1] }}" alt="Second Post" loading="lazy">
-        </div>
-        <div class="image small">
-          <img src="{{ imgs[2] }}" alt="Third Post" loading="lazy">
-        </div>
-      {% endif %}
-    </div>
-  </div>
-{% endfor %}
+              <div class="posts-imgs">
+                {% set imgs = series.post_imgs %}
+                
+                {% if not imgs or imgs|length == 0 %}
+                  <div class="no-post"><h2>No posts yet..</h2></div>
+                
+                {% elif imgs|length == 1 %}
+                  <div class="one-post">
+                    <img src="{{ imgs[0] }}" alt="Post Image" loading="lazy">
+                  </div>
+                
+                {% elif imgs|length == 2 %}
+                  <div class="image large">
+                    <img src="{{ imgs[0] }}" alt="Main Post" loading="lazy">
+                  </div>
+                  <div class="image medium">
+                    <img src="{{ imgs[1] }}" alt="Second Post" loading="lazy">
+                  </div>
+                
+                {% elif imgs|length >= 3 %}
+                  <div class="image large">
+                    <img src="{{ imgs[0] }}" alt="Main Post" loading="lazy">
+                  </div>
+                  <div class="image medium">
+                    <img src="{{ imgs[1] }}" alt="Second Post" loading="lazy">
+                  </div>
+                  <div class="image small">
+                    <img src="{{ imgs[2] }}" alt="Third Post" loading="lazy">
+                  </div>
+                {% endif %}
+              </div>
+         </div>
+      {% endfor %}
 
           
         </div>
@@ -618,6 +624,30 @@
 
   // Show posts by default when page loads
   document.addEventListener("DOMContentLoaded", showPosts);
+
+  document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".post-herald").forEach(card => {
+    card.addEventListener("click", function () {
+      const href = this.getAttribute("data-href");
+      if (href) {
+        window.location.href = href;
+      }
+    });
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".series-herald").forEach(card => {
+    card.addEventListener("click", function () {
+      const href = this.getAttribute("data-href");
+      if (href) {
+        window.location.href = href;
+      }
+    });
+  });
+});
+
+
 </script>
 
 </body>
