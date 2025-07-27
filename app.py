@@ -7,6 +7,7 @@ from functools import wraps
 import uuid  
 import os
 from firebasesetup import initialize_firebase_admin
+from google.cloud import firestore 
 
 firebase = initialize_firebase_admin()
 firestore_db = firebase["firestore"]
@@ -59,7 +60,11 @@ def logout():
 # Routes
 @app.route('/')
 def home():
-    posts_docs = firestore_db.collection('posts').stream()
+    posts_docs = (
+    firestore_db.collection('posts')
+    .order_by('published_at', direction=firestore.Query.DESCENDING)
+    .stream()
+)
     posts = []
     for doc in posts_docs:
         post_data = doc.to_dict()
@@ -161,25 +166,36 @@ def create_post():
         else:
             image_url = form.image_url.data
 
+        now_utc = datetime.now(timezone.utc)
         post_data= {
             "title": form.title.data,
             "description": form.description.data,
             "content": form.content.data,
             "image": image_url,
             "series_id": form.series_id.data,
-            "published_at": datetime.now(timezone.utc),
-            "updated_at": datetime.now(timezone.utc),
+            "published_at": now_utc,
+            "updated_at": now_utc,
         }
-        
+
         try:
-            post_ref, write_result = firestore_db.collection('posts').add(post_data)
-            print(f"Post saved successfully! Post ID: {post_ref.id}")
+            write_result, doc_ref  = firestore_db.collection('posts').add(post_data)
+
+            # update series timestamp
+            firestore_db.collection('series').document(form.series_id.data).update({
+                "updated_at": now_utc
+                })
+            
+            
         except Exception as e:
+            flash("Error saving post. Please try again.", "danger")
             print(f"Error saving post: {e}")
+            return render_template('admin/create-post.html', form=form)
 
 
-        flash('Your post was created successfully!', 'success')
-        return redirect(url_for('admin_suite'))
+        flash("Post created successfully!", "success")
+        print(f"Post saved successfully! Post ID: {doc_ref.id}")
+        return redirect(url_for('view_post', post_id=doc_ref.id))
+        
     return render_template('admin/create-post.html', form=form)
 
 
@@ -187,25 +203,29 @@ def create_post():
 @login_required
 def create_series():
     form = SeriesForm()
+    utc_now = datetime.now(timezone.utc)
     if form.validate_on_submit():
 
         series_data = {
             'title': form.title.data,
             'description': form.description.data,
-            'start_date': datetime.now(timezone.utc)
+            'start_date': utc_now,
+            'updated_at': utc_now
             }
         
         try:
-            series_ref, write_result = firestore_db.collection('series').add(series_data)
-            print(f"Post saved successfully! Post ID: {series_ref.id}")
+            write_result, series_ref = firestore_db.collection('series').add(series_data)
+            
         except Exception as e:
+            flash(f"Error saving post", 'error')
             print(f"Error saving post: {e}")
+            return render_template('admin/create-series.html', form=form)
 
-        flash(f"Series '{series_data['title']}' created successfully!", "success")
-       
         # Redirect to series detail or post creation page with series preselected
+        flash(f"Series '{series_data['title']}' created successfully!", "success")
+        print(f"Post saved successfully! Post ID: {series_ref.id}")
         return redirect(url_for('create_post', series_id=series_ref.id))
-    
+        
     return render_template('admin/create-series.html', form=form)
 
 # Uncomment and finish this when needed
